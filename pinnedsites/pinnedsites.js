@@ -8,7 +8,7 @@
 *
 * Date: Tues May 24 8:30:00 2011 -0500
 *
-* Version: 0.2.0.0
+* Version: 0.2.0.1
 */
 
 Array.prototype.find = function (property, value) {
@@ -353,12 +353,13 @@ Pinned = window.Pinned = function () {
 					var curButton = _buttons[item];
 					
 					if (curButton.styles != undefined) {
-						for(var s = 0; s < curButton.styles.length; ++s) {
-							var style = curButton.styles[s];
-							if (style.current != undefined && style.current === true) {
-								window.external.msSiteModeShowButtonStyle(curButton.id, style.id);
-							}
+						var style = curButton.styles.find('current', true);
+						if (style == undefined) {
+							writeToConsole('Button [' + curButton.id + '] did not have a "current" field set to true so we default to the first style');
+							style = curButton.styles[0];
+							style.current = true;
 						}
+						window.external.msSiteModeShowButtonStyle(curButton.id, style.id);
 					} else {
 						window.external.msSiteModeUpdateThumbBarButton(curButton.id, true, true);
 					}
