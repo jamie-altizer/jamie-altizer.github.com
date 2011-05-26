@@ -8,7 +8,7 @@
 *
 * Date: Tues May 24 8:30:00 2011 -0500
 *
-* Version: 0.1.1.0
+* Version: 0.2.0.0
 */
 
 Array.prototype.find = function (property, value) {
@@ -20,8 +20,8 @@ Array.prototype.find = function (property, value) {
 	return undefined;
 };
 
-//If something does not seem to be functioning, please check the Debugging Console of your browser
-//  for potential information as to why not.
+//If something does not seem to be functioning, please check the Debugging Console of your browser. Some known behavior or issues
+//  will be output there.
 Pinned = window.Pinned = function () {
     function hasFuncitonality() {
         return typeof window.external.msAddSiteMode != 'undefined';
@@ -98,22 +98,19 @@ Pinned = window.Pinned = function () {
                     { 'name': 'name', 'value': 'msapplication-starturl' },
                     { 'name': 'content', 'value': options.startUrl}]));
 
-                if (options.windowSize == undefined) {
-                    options.windowSize = "width: 800;height: 600;";
+                if (options.windowSize != undefined) {
+					addElementToHead(createMetaElement([
+						{ 'name': 'name', 'value': 'msapplication-window' },
+						{ 'name': 'content', 'value': options.windowSize}]));
                 }
 
-                addElementToHead(createMetaElement([
-                    { 'name': 'name', 'value': 'msapplication-window' },
-                    { 'name': 'content', 'value': options.windowSize}]));
 
-                if (options.color == undefined) {
-                    options.color = 'blue';
+                if (options.color != undefined) {
+					addElementToHead(createMetaElement([
+						{ 'name': 'name', 'value': 'msapplication-navbutton-color' },
+						{ 'name': 'content', 'value': options.color}]));
                 }
-
-                addElementToHead(createMetaElement([
-                    { 'name': 'name', 'value': 'msapplication-navbutton-color' },
-                    { 'name': 'content', 'value': options.color}]));
-            }
+			}
         },
 
         addToStartMenu: function () {
