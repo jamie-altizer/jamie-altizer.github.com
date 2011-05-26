@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pinned Sites Example</title>
+    <link rel="shortcut icon" href="pin.ico"/>
+	<script src="pinnedsites.js" type="text/javascript"></script>
+</head>
+<body>
+<p>This page is to be an example of using this javascript API</p>
+<a href="#" title="Pin to Start Menu" onclick="Pinned.addToStartMenu();">Click here</a> to add a link in the Start Menu.
+
+<script type="text/javascript">
+    var ChangeStyleExample = {
+        button1: function (buttonId, styles) {
+			var style = styles.find('current', true);
+			switch(style.tooltip) {
+				case 'Diamond Button':
+					var id = styles.find('tooltip', 'Circle Button').id;
+					Pinned.ThumbBar.changeStyle(buttonId, id);
+				break;
+				
+				case 'Circle Button':
+					var id = styles.find('tooltip', 'Diamond Button').id;
+					Pinned.ThumbBar.changeStyle(buttonId, id);
+				break;
+				
+				default:
+				
+				break;
+			}
+		},
+		
+        button2: function (buttonId, styles) {
+            alert('button: ' + buttonId + '\nstyles: ' + styles.length);
+        }
+    };
+
+	Pinned.init({'name': 'My Pinned Site', 'tooltip': 'This site is AWESOME', 'windowSize': 'width=800;height=600', 'color': 'limegreen'});
+
+	Pinned.Tasks.build([
+		{ 'name': 'Search', 'action': 'http://www.google.com' },
+		{ 'name': 'CNN', 'action': 'http://www.cnn.com' }]);
+
+
+    //ThumbBar example
+    Pinned.ThumbBar.build([
+		{'styles': [
+				{'icon': 'style1.ico', 'tooltip': 'Diamond Button', 'current': true},
+				{'icon': 'style2.ico', 'tooltip': 'Circle Button'}],
+		 'callback': ChangeStyleExample.button1},
+        {'tooltip': 'Pin Button', 
+		 'icon': 'pin.ico', 
+		 'callback': ChangeStyleExample.button2}],
+        false);
+
+    //Jumplist example
+    Pinned.Jumplist.clear();
+    Pinned.Jumplist.build('Links',
+		[{ 'name': '.Net Rocks', 'action': 'http://dotnetrocks.com' },
+		 { 'name': 'Epitec Group (my employer)', 'action': 'http://www.epitecgroup.com' }]);
+
+
+    //Overlay examples
+    Pinned.Overlay.clear();
+    //Pinned.Overlay.blink('http://localhost/jamie/pinnedsites/tb-overlay.ico', 5, 3);
+    //Pinned.Overlay.add('http://localhost/jamie/pinnedsites/tb-overlay.ico');
+    Pinned.Overlay.removeAfter('http://localhost/jamie/pinnedsites/style1.ico', 15);
+
+
+
+    //Example of "is site pinned"
+    alert('Already pinned: ' + Pinned.isPinned);
+
+
+    //Taskbar button flash
+    Pinned.Taskbar.flash(5);
+</script>
+</body>
+</html>
