@@ -1,0 +1,14 @@
+# common Visual Studio stuff
+[Dd]ocs
+*.suo
+*.suo
+*[Bb]in/
+*obj/
+*.user
+*.aps
+*.eto
+TestResults/
+/**/*.Publish.xml
+*ReSharper*
+*StyleCop.Cache
+/*.docstates
